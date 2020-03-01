@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">carlo</string>
+    <string name="host">http://192.168.1.219/carlo/</string>
+</resources>
