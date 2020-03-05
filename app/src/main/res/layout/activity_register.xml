@@ -91,6 +91,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:hint="UPIID"
+            android:gravity="center"
+            android:id="@+id/UPPID"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
             android:hint="Phone:"
             android:gravity="center"
             android:id="@+id/mobile"

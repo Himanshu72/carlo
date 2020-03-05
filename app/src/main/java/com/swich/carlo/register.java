@@ -33,6 +33,7 @@ public class register extends AppCompatActivity {
     EditText phone;
     EditText pass;
     EditText cpass;
+    EditText upi;
     Button btn;
     RadioGroup rg;
     RadioButton rb;
@@ -68,6 +69,7 @@ public class register extends AppCompatActivity {
         phone=(EditText)findViewById(R.id.mobile);
         pass=(EditText)findViewById(R.id.pass);
         cpass=(EditText)findViewById(R.id.cpass);
+        upi=(EditText)findViewById(R.id.UPPID) ;
         error=(TextView)findViewById(R.id.error);
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +90,7 @@ public class register extends AppCompatActivity {
                 String p= String.valueOf(pass.getText());
                 String cp= String.valueOf(cpass.getText());
                 String gen= (String) rb.getText();
+                String upiid=String.valueOf(upi.getText());
 
                 if(!p.equals(cp)){
                     error.setText("Please enter same value in password and confrim password");
@@ -99,7 +102,7 @@ public class register extends AppCompatActivity {
 
 
 
-                connect(na,em,ph,add,p,gen,newString);
+                connect(na,em,ph,add,p,gen,newString,upiid);
 
             }
         });
@@ -108,7 +111,7 @@ public class register extends AppCompatActivity {
 
     }
 
-  public void connect(final String name, final String email, final String phone, final String address, final String password, final String gender, final String role){
+  public void connect(final String name, final String email, final String phone, final String address, final String password, final String gender, final String role,final String upi){
 
      String URLline = getString(R.string.host)+"insert.php";
 
@@ -143,6 +146,7 @@ public class register extends AppCompatActivity {
               params.put("address",address);
               params.put("role",role);
               params.put("gender", gender);
+              params.put("upi", upi);
               return params;
           }
       };

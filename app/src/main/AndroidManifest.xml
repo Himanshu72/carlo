@@ -10,7 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".OwnerDash"></activity>
+        <activity android:name=".Feedback"></activity>
+        <activity android:name=".Profile" />
+        <activity android:name=".OwnerDash" />
         <activity android:name=".Dashboard" />
         <activity android:name=".register" />
         <activity android:name=".login" />
