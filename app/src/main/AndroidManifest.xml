@@ -10,7 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Feedback"></activity>
+        <activity android:name=".Listbook"></activity>
+        <activity android:name=".Addcar" />
+        <activity android:name=".Feedback" />
         <activity android:name=".Profile" />
         <activity android:name=".OwnerDash" />
         <activity android:name=".Dashboard" />
@@ -24,6 +26,8 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 

@@ -74,6 +74,14 @@ public class OwnerDash extends AppCompatActivity {
             }
         });
 
+       addcar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(OwnerDash.this,Addcar.class);
+                startActivity(i);
+            }
+        });
+
     }
 
 
