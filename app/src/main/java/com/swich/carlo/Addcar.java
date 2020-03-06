@@ -45,7 +45,7 @@ public class Addcar extends AppCompatActivity {
     private ImageView imageView;
 
     private final int GALLERY = 1;
-    private String upload_URL = "http://192.168.1.225/carlo/upload.php";
+    private String upload_URL ;
     JSONObject jsonObject;
     RequestQueue rQueue;
     Button sub;
@@ -59,7 +59,7 @@ public class Addcar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addcar);
         requestMultiplePermissions();
-
+        upload_URL=getString(R.string.host)+"/upload.php";
         btn = findViewById(R.id.btn);
         imageView = (ImageView) findViewById(R.id.iv);
         sub=(Button) findViewById(R.id.submit);

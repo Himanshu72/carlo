@@ -76,6 +76,14 @@ CardView his;
                 startActivity(i);
             }
         });
+        book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(Dashboard.this,Listbook.class);
+                startActivity(i);
+            }
+        });
+
 
 
 
