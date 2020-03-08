@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -38,7 +39,6 @@ String id;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-          name=(EditText) findViewById(R.id.name);
         email=(EditText) findViewById(R.id.email);
         phone=(EditText) findViewById(R.id.phone);
        upi=(EditText) findViewById(R.id.upi);
@@ -48,13 +48,14 @@ String id;
         rg=(RadioGroup)findViewById(R.id.rg);
         m=(RadioButton)findViewById(R.id.male);
         f=(RadioButton)findViewById(R.id.female);
+        name= (EditText) findViewById(R.id.name);
         final SharedPreferences pref ; // 0 - for private mode
         final SharedPreferences.Editor editor;
 
         pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         editor = pref.edit();
         String user=  pref.getString("user", null); // getting String
-        try {
+           try {
 
              obj=new JSONObject(user);
             name.setText(obj.getString("Name"));
