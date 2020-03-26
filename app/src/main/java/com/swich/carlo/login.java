@@ -34,6 +34,7 @@ public class login extends AppCompatActivity {
     EditText password;
     SharedPreferences pref ; // 0 - for private mode
     SharedPreferences.Editor editor;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

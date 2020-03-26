@@ -1,11 +1,18 @@
 package com.swich.carlo;
 
+import android.util.Log;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class Booking {
-  String carID;
-  String carMODEL;
-  String carComp;
-  String price;
-  String drop;
+    String carID;
+    String carMODEL;
+    String carComp;
+    String price;
+    String drop;
     String pickUp;
     String bookID;
     String userID;
@@ -93,4 +100,21 @@ public class Booking {
     public void setBookID(String bookID) {
         this.bookID = bookID;
     }
+
+    public String timeToDate(String timestamp) {
+        Date date = new Date(Long.valueOf(timestamp)*1000L);
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        format.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
+        String formatted = format.format(date);
+        Log.d("here-----", formatted);
+       return formatted;
+    }
+    public String getpickDate(){
+        return timeToDate(this.pickUp);
+    }
+
+    public String getdropDate(){
+        return timeToDate(this.drop);
+    }
+
 }
