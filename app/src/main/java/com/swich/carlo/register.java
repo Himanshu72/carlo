@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,10 +43,12 @@ public class register extends AppCompatActivity {
     TextView error;
     TextView head;
     String newString;
+    AwesomeValidation valid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        valid=new AwesomeValidation(ValidationStyle.BASIC);
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -71,39 +76,51 @@ public class register extends AppCompatActivity {
         cpass=(EditText)findViewById(R.id.cpass);
         upi=(EditText)findViewById(R.id.UPPID) ;
         error=(TextView)findViewById(R.id.error);
+        valid.addValidation(this,R.id.name,"[a-zA-Z\\s]+",R.string.validname);
+        valid.addValidation(this,R.id.email, Patterns.EMAIL_ADDRESS,R.string.invaidEmail);
+        valid.addValidation(this,R.id.add,".{6,}",R.string.invalidadd);
+        valid.addValidation(this,R.id.pass,".{6,}",R.string.invalidPass);
+        valid.addValidation(this,R.id.mobile,"[0-9]{10}",R.string.invalidphone);
+        valid.addValidation(this,R.id.UPPID,"/^\\w+@\\w+$/.",R.string.invalidupi);
+
+        valid.addValidation(this,R.id.pass,R.id.cpass,R.string.cpass);
+
+
+
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(rg.getCheckedRadioButtonId()==-1) {
-                    error.setText("Please select your gender");
-                    error.setVisibility(View.VISIBLE);
-                    return;
-                }else{
-                    rb= (RadioButton) findViewById(rg.getCheckedRadioButtonId());
+
+                if (valid.validate()) {
+
+                    if (rg.getCheckedRadioButtonId() == -1) {
+                        error.setText("Please select your gender");
+                        error.setVisibility(View.VISIBLE);
+                        return;
+                    } else {
+                        rb = (RadioButton) findViewById(rg.getCheckedRadioButtonId());
+                    }
+
+                    String na = String.valueOf(name.getText());
+                    String em = String.valueOf(email.getText());
+                    String add = String.valueOf(address.getText());
+                    String ph = String.valueOf(phone.getText());
+                    String p = String.valueOf(pass.getText());
+                    String cp = String.valueOf(cpass.getText());
+                    String gen = (String) rb.getText();
+                    String upiid = String.valueOf(upi.getText());
+
+                    if (!p.equals(cp)) {
+                        error.setText("Please enter same value in password and confrim password");
+                        error.setVisibility(View.VISIBLE);
+                        return;
+                    }
+
+
+                    connect(na, em, ph, add, p, gen, newString, upiid);
+
                 }
-
-                String na= String.valueOf(name.getText());
-                String em= String.valueOf(email.getText());
-                String add= String.valueOf(address.getText());
-                String ph= String.valueOf(phone.getText());
-                String p= String.valueOf(pass.getText());
-                String cp= String.valueOf(cpass.getText());
-                String gen= (String) rb.getText();
-                String upiid=String.valueOf(upi.getText());
-
-                if(!p.equals(cp)){
-                    error.setText("Please enter same value in password and confrim password");
-                    error.setVisibility(View.VISIBLE);
-                    return;
-                }
-
-
-
-
-
-                connect(na,em,ph,add,p,gen,newString,upiid);
-
             }
         });
 

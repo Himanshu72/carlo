@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,11 +37,14 @@ Button edit,save;
 RadioGroup rg;
 RadioButton m,f;
 String id;
-    JSONObject obj;
+JSONObject obj;
+AwesomeValidation valid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        valid=new AwesomeValidation(ValidationStyle.BASIC);
         email=(EditText) findViewById(R.id.email);
         phone=(EditText) findViewById(R.id.phone);
        upi=(EditText) findViewById(R.id.upi);
@@ -49,6 +55,14 @@ String id;
         m=(RadioButton)findViewById(R.id.male);
         f=(RadioButton)findViewById(R.id.female);
         name= (EditText) findViewById(R.id.name);
+        valid.addValidation(this,R.id.email, Patterns.EMAIL_ADDRESS,R.string.invaidEmail);
+        valid.addValidation(this,R.id.phone, "[0-9]{10}",R.string.invalidphone);
+        valid.addValidation(this,R.id.upi, "/^\\w+@\\w+$/.",R.string.invalidupi);
+        valid.addValidation(this,R.id.add, ".{6}",R.string.invalidadd);
+        valid.addValidation(this,R.id.name, "[a-zA-Z\\s]+",R.string.validname);
+
+
+
         final SharedPreferences pref ; // 0 - for private mode
         final SharedPreferences.Editor editor;
 

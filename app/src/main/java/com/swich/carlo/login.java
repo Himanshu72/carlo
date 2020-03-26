@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +37,7 @@ public class login extends AppCompatActivity {
     EditText password;
     SharedPreferences pref ; // 0 - for private mode
     SharedPreferences.Editor editor;
-    
+    AwesomeValidation valid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,8 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         rau=(TextView) findViewById(R.id.rau);
         rao=(TextView) findViewById(R.id.rao);
+        valid=new AwesomeValidation(ValidationStyle.BASIC);
+
         rau.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +77,8 @@ public class login extends AppCompatActivity {
         email=(EditText)findViewById(R.id.email);
         password=(EditText)findViewById(R.id.pass);
 
+        valid.addValidation(this,R.id.email, Patterns.EMAIL_ADDRESS,R.string.invaidEmail);
+        valid.addValidation(this,R.id.pass,".{6,}",R.string.invalidPass);
          String user=  pref.getString("user", null); // getting String
         String role = null;
         if(user!=null){
@@ -96,15 +103,17 @@ public class login extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-              String em=String.valueOf(email.getText());
-                String pass=String.valueOf(password.getText());
-                if(em.trim()!="" && pass.trim()!="" && em!=null && pass!=null){
-                        login(em,pass);
-                }else{
-                    Toast.makeText(getApplicationContext(),"Wrong format",Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                if (valid.validate()) {
+                    String em = String.valueOf(email.getText());
+                    String pass = String.valueOf(password.getText());
+                    if (em.trim() != "" && pass.trim() != "" && em != null && pass != null) {
+                        login(em, pass);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Wrong format", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
+                }
             }
         });
 
