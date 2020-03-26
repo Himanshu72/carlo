@@ -23,6 +23,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -53,7 +55,7 @@ public class Addcar extends AppCompatActivity {
     String modelval,compval,priceval,desc;
     Bitmap bitmap;
     JSONObject obj;
-
+    AwesomeValidation valid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +63,19 @@ public class Addcar extends AppCompatActivity {
         requestMultiplePermissions();
         upload_URL=getString(R.string.host)+"/upload.php";
         btn = findViewById(R.id.btn);
+        valid=new AwesomeValidation(ValidationStyle.BASIC);
         imageView = (ImageView) findViewById(R.id.iv);
         sub=(Button) findViewById(R.id.submit);
         model=(EditText) findViewById(R.id.model);
         price=(EditText) findViewById(R.id.price);
         comp=(EditText) findViewById(R.id.company);
+
         description=(EditText) findViewById(R.id.desc);
+        valid.addValidation(this,R.id.model,"[a-zA-Z]{2,}",R.string.invalidmodel);
+        valid.addValidation(this,R.id.company,"[a-zA-Z]{3,}",R.string.invalidcomp);
+        valid.addValidation(this,R.id.price,"[0-9]+",R.string.invalidprice);
+
+
 
         final SharedPreferences pref ; // 0 - for private mode
         final SharedPreferences.Editor editor;
@@ -93,12 +102,14 @@ public class Addcar extends AppCompatActivity {
         sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                modelval= String.valueOf(model.getText());
-                priceval= String.valueOf(price.getText());
-                compval= String.valueOf(comp.getText());
-                desc= String.valueOf(description.getText());
-                sub.setEnabled(false);
-                uploadImage(bitmap);
+                if (valid.validate()) {
+                    modelval = String.valueOf(model.getText());
+                    priceval = String.valueOf(price.getText());
+                    compval = String.valueOf(comp.getText());
+                    desc = String.valueOf(description.getText());
+                    sub.setEnabled(false);
+                    uploadImage(bitmap);
+                }
             }
         });
 

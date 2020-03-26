@@ -17,6 +17,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +30,7 @@ public class Feedback extends AppCompatActivity {
 String regId;
 EditText msg;
 Button btn;
+AwesomeValidation valid;
     JSONObject obj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,9 @@ Button btn;
         final SharedPreferences.Editor editor;
         msg=(EditText)findViewById(R.id.textArea);
         btn=(Button)findViewById(R.id.btn);
+        valid=new AwesomeValidation(ValidationStyle.BASIC);
+        valid.addValidation(this,R.id.textArea,".{20,}",R.string.invalidfeed);
+
 
         pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         editor = pref.edit();
