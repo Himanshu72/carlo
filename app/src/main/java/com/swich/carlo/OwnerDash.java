@@ -18,6 +18,7 @@ public class OwnerDash extends AppCompatActivity {
     CardView addcar;
     CardView feedback;
     CardView history;
+    CardView chat;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -58,6 +59,22 @@ public class OwnerDash extends AppCompatActivity {
         feedback=(CardView) findViewById(R.id.feedback);
         addcar=(CardView) findViewById(R.id.addcar);
         history=(CardView) findViewById(R.id.history);
+        chat=(CardView) findViewById(R.id.chatlist);
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(OwnerDash.this,OwnerHis.class);
+                startActivity(i);
+            }
+        });
+
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Intent i=new Intent(OwnerDash.this,chatlist.class);
+               startActivity(i);
+            }
+        });
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,6 +100,8 @@ public class OwnerDash extends AppCompatActivity {
         });
 
     }
+
+
 
 
 

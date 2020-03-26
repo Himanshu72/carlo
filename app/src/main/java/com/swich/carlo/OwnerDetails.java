@@ -55,6 +55,7 @@ public class OwnerDetails extends AppCompatActivity {
             response = null;
         } else {
             response = extras.getString("data");
+
         }
 
         try {

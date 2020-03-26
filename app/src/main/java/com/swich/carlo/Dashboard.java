@@ -83,7 +83,13 @@ CardView his;
                 startActivity(i);
             }
         });
-
+        his.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(Dashboard.this,History.class);
+                startActivity(i);
+            }
+        });
 
 
 

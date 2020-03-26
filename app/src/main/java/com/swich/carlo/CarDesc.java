@@ -221,7 +221,9 @@ MyListData lis=null;
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent i=new Intent(CarDesc.this,Chat.class);
+                i.putExtra("data",obj);
+                startActivity(i);
             }
         });
 
