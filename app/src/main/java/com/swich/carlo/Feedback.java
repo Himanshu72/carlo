@@ -44,6 +44,7 @@ AwesomeValidation valid;
         valid.addValidation(this,R.id.textArea,".{20,}",R.string.invalidfeed);
 
 
+
         pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         editor = pref.edit();
         String user=  pref.getString("user", null); // getting String
@@ -59,6 +60,7 @@ AwesomeValidation valid;
        btn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+              if(valid.validate()){
                final String m= String.valueOf(msg.getText());
 
 
@@ -113,6 +115,7 @@ AwesomeValidation valid;
                requestQueue.add(stringRequest);
 
 
+           }
            }
        });
 
