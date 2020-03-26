@@ -58,8 +58,8 @@ AwesomeValidation valid;
         valid.addValidation(this,R.id.email, Patterns.EMAIL_ADDRESS,R.string.invaidEmail);
         valid.addValidation(this,R.id.phone, "[0-9]{10}",R.string.invalidphone);
         valid.addValidation(this,R.id.upi, "/^\\w+@\\w+$/.",R.string.invalidupi);
-        valid.addValidation(this,R.id.add, ".{6}",R.string.invalidadd);
-        valid.addValidation(this,R.id.name, "[a-zA-Z\\s]+",R.string.validname);
+        valid.addValidation(this,R.id.add, ".{6,}",R.string.invalidadd);
+        valid.addValidation(this,R.id.name, "[a-zA-Z0-9.\\-_]{2,256}@[a-zA-Z]{2,64}",R.string.validname);
 
 
 
@@ -107,85 +107,86 @@ AwesomeValidation valid;
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String na= String.valueOf(name.getText());
-                final String ad= String.valueOf(add.getText());
-                final String em= String.valueOf(email.getText());
-                final String ph= String.valueOf(phone.getText());
-                final String u= String.valueOf(upi.getText());
+                if (valid.validate()) {
+                    final String na = String.valueOf(name.getText());
+                    final String ad = String.valueOf(add.getText());
+                    final String em = String.valueOf(email.getText());
+                    final String ph = String.valueOf(phone.getText());
+                    final String u = String.valueOf(upi.getText());
 
-                String gen=null;
-                if(rg.getCheckedRadioButtonId()==-1) {
-                   Toast.makeText(getApplicationContext(),"Select Gender",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                    m= (RadioButton) findViewById(rg.getCheckedRadioButtonId());
-                    gen= String.valueOf(m.getText());
-
-
-
-                //
-
-
-                String URLline = getString(R.string.host)+"updateUser.php";
-
-
-                final String finalGen = gen;
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-
-                                if(!response.equals("404")){
-
-                                    editor.putString("user",response);
-                                    editor.commit();
-                                    Intent i = null;
-                                    try {
-                                        if(obj.getString("role").equals("user"))
-                                        i=new Intent(Profile.this,Dashboard.class);
-                                        else
-                                            i=new Intent(Profile.this,OwnerDash.class);
-                                    } catch (JSONException e) {
-                                        
-                                    }
-                                    startActivity(i);
-                                    finish();
-                                }else {
-                                    Toast.makeText(getApplicationContext(),"Some thing went wrong",Toast.LENGTH_LONG);
-                                }
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                //displaying the error in toast if occurrs
-
-                                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        }){
-
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String,String> params=new HashMap<String,String>();
-                        params.put("name",na);
-                        params.put("email",em);
-                        params.put("phone",ph);
-                        params.put("add",ad);
-                        params.put("gender", finalGen);
-                        params.put("upi", u);
-                        params.put("regID",id);
-                        return params;
+                    String gen = null;
+                    if (rg.getCheckedRadioButtonId() == -1) {
+                        Toast.makeText(getApplicationContext(), "Select Gender", Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                };
-
-                // request queue
-                RequestQueue requestQueue = Volley.newRequestQueue(Profile.this);
-
-                requestQueue.add(stringRequest);
-
-                //
+                    m = (RadioButton) findViewById(rg.getCheckedRadioButtonId());
+                    gen = String.valueOf(m.getText());
 
 
+                    //
+
+
+                    String URLline = getString(R.string.host) + "updateUser.php";
+
+
+                    final String finalGen = gen;
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+
+                                    if (!response.equals("404")) {
+
+                                        editor.putString("user", response);
+                                        editor.commit();
+                                        Intent i = null;
+                                        try {
+                                            if (obj.getString("role").equals("user"))
+                                                i = new Intent(Profile.this, Dashboard.class);
+                                            else
+                                                i = new Intent(Profile.this, OwnerDash.class);
+                                        } catch (JSONException e) {
+
+                                        }
+                                        startActivity(i);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Some thing went wrong", Toast.LENGTH_LONG);
+                                    }
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    //displaying the error in toast if occurrs
+
+                                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            }) {
+
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("name", na);
+                            params.put("email", em);
+                            params.put("phone", ph);
+                            params.put("add", ad);
+                            params.put("gender", finalGen);
+                            params.put("upi", u);
+                            params.put("regID", id);
+                            return params;
+                        }
+                    };
+
+                    // request queue
+                    RequestQueue requestQueue = Volley.newRequestQueue(Profile.this);
+
+                    requestQueue.add(stringRequest);
+
+                    //
+
+
+                }
             }
         });
 

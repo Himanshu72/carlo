@@ -146,16 +146,7 @@ login();
                 return params;
             }
         };
-//5e64c7a54e8ae
-//5e64c3935ff7e
-//5e5c003d5b15c
-//5e5bea5656531
-//10.0
-//1583760600
-//1583796600
-//active
-//2020-03-08 10:23:3
-        // request queue
+
         RequestQueue requestQueue = Volley.newRequestQueue(con);
 
         requestQueue.add(stringRequest);

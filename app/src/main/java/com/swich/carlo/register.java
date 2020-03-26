@@ -81,7 +81,7 @@ public class register extends AppCompatActivity {
         valid.addValidation(this,R.id.add,".{6,}",R.string.invalidadd);
         valid.addValidation(this,R.id.pass,".{6,}",R.string.invalidPass);
         valid.addValidation(this,R.id.mobile,"[0-9]{10}",R.string.invalidphone);
-        valid.addValidation(this,R.id.UPPID,"/^\\w+@\\w+$/.",R.string.invalidupi);
+        valid.addValidation(this,R.id.UPPID,"[a-zA-Z0-9.\\-_]{2,256}@[a-zA-Z]{2,64}add.",R.string.invalidupi);
 
         valid.addValidation(this,R.id.pass,R.id.cpass,R.string.cpass);
 
