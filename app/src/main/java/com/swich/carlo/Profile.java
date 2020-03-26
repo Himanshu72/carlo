@@ -57,9 +57,9 @@ AwesomeValidation valid;
         name= (EditText) findViewById(R.id.name);
         valid.addValidation(this,R.id.email, Patterns.EMAIL_ADDRESS,R.string.invaidEmail);
         valid.addValidation(this,R.id.phone, "[0-9]{10}",R.string.invalidphone);
-        valid.addValidation(this,R.id.upi, "/^\\w+@\\w+$/.",R.string.invalidupi);
+        valid.addValidation(this,R.id.upi, "[a-zA-Z0-9.\\-_]{2,256}@[a-zA-Z]{2,64}",R.string.invalidupi);
         valid.addValidation(this,R.id.add, ".{6,}",R.string.invalidadd);
-        valid.addValidation(this,R.id.name, "[a-zA-Z0-9.\\-_]{2,256}@[a-zA-Z]{2,64}",R.string.validname);
+        valid.addValidation(this,R.id.name, "[a-zA-Z\\s]+",R.string.validname);
 
 
 
